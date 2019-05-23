@@ -11,9 +11,15 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', 'BlogsController@index');
 
-Route::get('home', 'HomeController@index');
+Route::get('/post-{id}', 'PostController@index')->where('id', '[0-9]+');
+
+Route::get('/edit-{id}', ['middleware' => 'auth', 'uses' => 'EditController@index'])->where('id', '[0-9]+');
+
+Route::get('/create', 'CreateController@index');
+
+Route::post('/save',  ['middleware' => 'auth', 'uses' => 'CreateController@save']);
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
